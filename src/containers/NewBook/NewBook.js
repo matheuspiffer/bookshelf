@@ -1,33 +1,37 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from "react";
 import classes from "./NewBook.module.css";
-
+import Spinner from '../../Components/Spinner/Spinner'
 class NewBook extends Component {
     state = {
-        id: 0,
-        title: "",
-        description: "",
-        author: "",
-        image_url: "",
-        category: "",
-        date: "",
-        deleted: false,
+        books: {
+            id: 0,
+            title: "",
+            description: "",
+            author: "",
+            image_url: "",
+            category: "",
+            date: "",
+            deleted: false,
+        },
+        loading: false,
     };
 
     componentDidMount() {
         let nextId = localStorage.getItem("id");
+        this.setState({ loading: !this.state.loading });
         if (nextId == null) {
             localStorage.setItem("id", 0);
             nextId = 1;
-            this.setState({ id: nextId })
+            this.setState({ id: nextId });
         } else {
             nextId = parseInt(nextId) + 1;
-            this.setState({ id: nextId })
+            this.setState({ id: nextId });
         }
-
     }
 
     bookDataHandler = () => {
-        const id = this.state.id
+        const id = this.state.id;
         const data = {
             id: this.state.id,
             title: this.state.title,
@@ -38,30 +42,34 @@ class NewBook extends Component {
             date: new Date(),
             deleted: false,
         };
-        console.log(data)
+        console.log(data);
         localStorage.setItem(id, JSON.stringify(data));
         localStorage.setItem("id", id);
-        this.setState({ id: id + 1 })
+        this.setState({ id: id + 1 });
     };
 
     render() {
+        const img = this.state.loading ? <div className={classes.Spinner}><Spinner /><h2>Please fill the fields</h2></div> : <img src={this.state.image_url} />
         return (
             <div className={classes.Container}>
                 <h1>Add a Book</h1>
                 <div className={classes.NewBook}>
                     <div className={classes.BookImage}>
-                        <img src={this.state.image_url}></img>
+                        {img}
                     </div>
                     <div className={classes.BookInfos}>
                         <div className={classes.BookInfo}>
                             <label>Image URL</label>
                             <input
-                                type="http"
+                                type="url"
                                 value={this.state.image_url}
                                 onChange={(event) =>
+
                                     this.setState({
-                                        image_url: event.target.value
+                                        image_url: event.target.value,
+                                        loading: event.target.value == '' ? true : false,
                                     })
+
                                 }
                             />
                         </div>
