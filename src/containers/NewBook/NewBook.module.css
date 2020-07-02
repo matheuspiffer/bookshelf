@@ -9,9 +9,11 @@
 }
 .NewBook {
     display: grid;
+    align-items: center;
+    justify-content: center;
     grid-template-columns: 1fr 1fr;
     column-gap: 20px;
-    margin: 0 auto;
+    margin: 32px auto;
 }
 .NewBook h1 {
     display: block;
@@ -50,28 +52,32 @@
     border-radius: 4px;
     width: 100%;
     padding: 4px;
-    font-size: 12px;
+    font-size: 14px;
 }
-
 
 .BookInfo input:focus {
     outline: none;
     border-color: #777;
 }
-.Container button {
+.buttons{
+    display: flex;
+  justify-content: center;
+
+}
+.saveButton {
     cursor: pointer;
     background-color: #c210c2;
     border: 2px solid #c210c2;
     border-radius: 5px;
     color: #fff;
-    display: block;
+    /* display: block; */
     font-size: 16px;
     padding: 10px;
     position: relative;
-    margin: 20px 0;
+    margin: 20px 20px;
     width: 200px;
-    left: 50%;
-    transform: translateX(-50%);
+    /* left: 50%;
+    transform: translateX(-50%); */
 }
 .Container button:focus {
     outline: none;

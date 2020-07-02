@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import { Link } from 'react-router-dom'
 import Book from '../../Components/Book/Book'
 import classes from './Books.module.css'
 class Books extends Component {
@@ -17,16 +17,11 @@ class Books extends Component {
         for (let i = 1; i <= id; i++) {
             const book = JSON.parse(localStorage.getItem(i))
             if (book === null) continue
-            if (book.image_url == '') book.image_url = 'https://ik.imagekit.io/lc7oxtp9qa/default_book_GurI-Kgqs.jpg'
-            console.log(book.image_url)
+            if (book.image_url === '') book.image_url = 'https://ik.imagekit.io/lc7oxtp9qa/default_book_GurI-Kgqs.jpg'
+
             books.push(book)
         }
-        const updatedBooks = books.map((book) => {
-            return {
-                ...book,
-            };
-        });
-        this.setState({ books: updatedBooks });
+        this.setState({ books: books });
 
     }
 
@@ -41,13 +36,15 @@ class Books extends Component {
         if (!this.state.error) {
             books = this.state.books.map((book) => {
                 return (
-                    <Book
-                        key={book.id}
-                        title={book.title}
-                        author={book.author}
-                        image={book.image_url}
-                        clicked={() => this.bookSelectedHandler(book.id)}
-                    />
+                    <Link to={'book/' + book.id} key={book.id}>
+                        <Book
+                            title={book.title}
+                            author={book.author}
+                            image={book.image_url}
+                            description={book.description}
+                            clicked={() => this.bookSelectedHandler(book.id)}
+                        />
+                    </Link>
                 );
             });
         }

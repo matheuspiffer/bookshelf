@@ -1,14 +1,13 @@
-import React, { Component } from 'react'
-import { Route, NavLink, Redirect } from 'react-router-dom'
+import React from 'react'
 import NavigationItem from './NavigationItem/NavigationItem'
 import classes from './NavigationItems.module.css'
 
 const navigationItems = () => {
     return (
-            <ul className={classes.NavigationItems}>
-                <NavigationItem to='/books' exact>Books</NavigationItem>
-                <NavigationItem to='new-book'>New Book</NavigationItem>
-            </ul>
+        <ul className={classes.NavigationItems}>
+            <NavigationItem to='/books' exact>Books</NavigationItem>
+            <NavigationItem to='/book/new-book'>New Book</NavigationItem>
+        </ul>
     )
 }
 

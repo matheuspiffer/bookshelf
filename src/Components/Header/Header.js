@@ -4,11 +4,9 @@ import DrawerToggle from './SideDrawer/DrawerToggle/DrawerToggle'
 import classes from './Header.module.css'
 
 class Header extends Component {
-
     render() {
         return (
             <header className={classes.Header}>
-
                 <DrawerToggle clicked={this.props.drawerToggleClicked} />
                 <nav className={classes.DesktopOnly}>
                     <NavigationItems />

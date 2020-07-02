@@ -5,6 +5,7 @@ import Header from '../Components/Header/Header'
 import SideDrawer from '../Components/Header/SideDrawer/SideDrawer'
 import NewBook from './NewBook/NewBook'
 import Books from './Books/Books'
+import FullBook from './FullBook/FullBook'
 
 
 class Bookshelf extends Component {
@@ -25,8 +26,9 @@ class Bookshelf extends Component {
             <div className={classes.Bookshelf}>
                 <Header drawerToggleClicked={this.sideDrawerToggleHandler} />
                 <SideDrawer open={this.state.showSideDrawer} closed={this.sideDrawerClosedHandler} />
-                <Route path="/new-book" component={NewBook} />
                 <Route path="/books" component={Books} />
+                <Route path="/book/new-book" component={NewBook} />
+                <Route path="/book/:id" component={FullBook} />
                 <Redirect from="/" to="/books" />
 
             </div>
