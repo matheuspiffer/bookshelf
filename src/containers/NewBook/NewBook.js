@@ -14,6 +14,7 @@ class NewBook extends Component {
             image_url: "",
             category: "",
             deleted: false,
+            comments: []
 
         },
         loading: false,
@@ -48,6 +49,7 @@ class NewBook extends Component {
                 image_url: "",
                 category: "",
                 deleted: false,
+                comments: []
             },
         });
     };
@@ -66,6 +68,7 @@ class NewBook extends Component {
                 category: this.state.book.category,
                 date: Date.now(),
                 deleted: false,
+                comments: []
             };
 
             localStorage.setItem(id, JSON.stringify(data));
@@ -174,7 +177,7 @@ class NewBook extends Component {
                             <option>Select an option</option>
                             <option value="read">Read</option>
                             <option value="reading">Reading</option>
-                            <option value="Want to read">Want to read</option>
+                            <option value="wantToRead">Want to read</option>
                         </select>
                     </div>
                 </div>
@@ -239,8 +242,8 @@ class NewBook extends Component {
         }
         return (
             <div className={classes.Container}>
-            {redirect}
-            
+                {redirect}
+
                 {editing}
                 {this.renderForm()}
 

@@ -1,42 +1,38 @@
-.FlipCard {
+.Card {
     margin: 32px 10px;
     cursor: pointer;
     background-color: transparent;
     box-sizing: border-box;
-    width: 200px;
-    height: 300px;
-    perspective: 1000px;
-}
-
-.FlipCard img {
-    width: 200px;
+    width: 180px;
     height: 250px;
+    perspective: 1000px;
+    border-radius: 0 0 40px 40px;
+}
+.img {
+    z-index: 100;
+}
+.Card img {
+    width: 180px;
+    height: 220px;
     margin: auto;
 }
-.FlipCard h3 {
-    font-size: 14px;
+.Transition h3 {
+    font-size: 10px;
     color: black;
     text-transform: uppercase;
-    background-color: powderblue;
-    position: relative;
-    bottom: -10px;
-    font-weight: bold;
+    position: absolute;
+    bottom: -28px;
+
     line-height: 22px;
     display: inline;
     padding: 8px;
     border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+
 }
 
-.FlipCardInner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-}
-.FlipCardInner span {
+.Card span {
     position: absolute;
     top: -32px;
     left: 0;
@@ -47,44 +43,16 @@
     border-radius: 16px;
     color: white;
     width: 96px;
-}
-.FlipCard:hover .FlipCardInner {
-    transform: rotateY(180deg);
+    text-align: center;
 }
 
-.FlipCardFront,
-.FlipCardBack {
+.BookInfo h2 {
     position: absolute;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
+    top: 20px;
+    font-size: 16px;
+    font-weight: normal;
 }
 
-.FlipCardFront {
-    background-color: transparent;
-    box-shadow: 4px rgba(0, 0, 0, 0.2);
-    color: black;
+.Card:hover {
+    transform: scale(1.1);
 }
-
-.FlipCardBack {
-    background-color: rgb(138, 120, 189);
-    color: white;
-    transform: rotateY(180deg);
-}
-
-.BookInfo{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-}
-
-/* .Book:hover,
-.Book:active {
-    background-color: #c0ddf5;
-}
-
-.Author {
-    margin: 16px 0;
-    color: #ccc;
-} */

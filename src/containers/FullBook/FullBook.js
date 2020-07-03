@@ -15,33 +15,15 @@ class FullBook extends Component {
     };
 
     saveComment = () => {
-        const comment = this.state.comment
-        if (this.state.selectedBook.comments) {
-            const data = [...this.state.selectedBook.comments]
-                data.push(comment)
+        const newComment = this.state.comment
+        const bookComments = this.state.selectedBook.comments
+        const comments = [
+            ...bookComments,
+            newComment
+        ]
+        this.setState({ selectedBook: { comments: comments } })
 
-            const updatedBook = {
-                ...this.state.selectedBook,
-                comments2: [
-                    data
-                ]
-            }
-            const id = this.state.selectedBook.id
-            localStorage.setItem(id, JSON.stringify(updatedBook))
-            this.setState({ comment: '' })
-        } else {
-            const updatedBook = {
-                ...this.state.selectedBook,
-                comments: [
-                    comment
-                ]
-
-
-            }
-            const id = this.state.selectedBook.id
-            localStorage.setItem(id, JSON.stringify(updatedBook))
-            this.setState({ comment: '' })
-        }
+        console.log(this.state.selectedBook.comments)
     }
 
     updateComment = (event) => {
@@ -56,23 +38,23 @@ class FullBook extends Component {
                 </div>
                 <div className={classes.BookInfos}>
                     <div className={classes.BookInfo}>
-                        <h2>Title</h2>
+                        <h3>Title</h3>
                         <p>{this.state.selectedBook.title}</p>
                     </div>
                     <div className={classes.BookInfo}>
-                        <h2>Author</h2>
+                        <h3>Author</h3>
                         <p>{this.state.selectedBook.author}</p>
                     </div>
                     <div className={classes.BookInfo}>
-                        <h2>About</h2>
+                        <h3>About</h3>
                         <p>{this.state.selectedBook.description}</p>
                     </div>
                     <div className={classes.BookInfo}>
-                        <h2>Category</h2>
+                        <h3>Category</h3>
                         <p>{this.state.selectedBook.category}</p>
                     </div>
                     <div className={classes.BookInfo}>
-                        <h2>Created On</h2>
+                        <h3>Created On</h3>
                         <p>{new Intl.DateTimeFormat('pt-BR').format(this.state.selectedBook.date)}</p>
                     </div>
                 </div>

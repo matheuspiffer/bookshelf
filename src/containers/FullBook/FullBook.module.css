@@ -27,6 +27,16 @@
     width: 100%;
     margin: 0 auto;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+.BookInfo {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    border-bottom: 1px solid #777;
+    align-items: baseline;
+    text-align: center;
 }
 
 .BookImage {
@@ -38,6 +48,7 @@
     max-height: 350px;
     border-radius: 8px;
 }
+
 
 @media (max-width: 600px) {
     .Book {
