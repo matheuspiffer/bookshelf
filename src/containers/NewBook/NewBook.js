@@ -3,19 +3,18 @@ import React, { Component } from "react";
 import classes from "./NewBook.module.css";
 import Spinner from "../../Components/Spinner/Spinner";
 import { Redirect } from "react-router-dom";
-const initialState = {
-    id: 0,
-    title: "",
-    description: "",
-    author: "",
-    image_url: "",
-    category: "",
-    deleted: false,
-};
+
 class NewBook extends Component {
     state = {
         book: {
-            ...initialState,
+            id: 0,
+            title: "",
+            description: "",
+            author: "",
+            image_url: "",
+            category: "",
+            deleted: false,
+
         },
         loading: false,
         editing: false,
@@ -27,40 +26,60 @@ class NewBook extends Component {
         let nextId = localStorage.getItem("id");
         console.log(nextId);
         this.setState({ loading: !this.state.loading });
-        if (nextId == null) {
+        if (!nextId) {
             localStorage.setItem("id", 0);
-            nextId = 1;
-            this.state.book.id = nextId;
+            this.setState({ book: { id: 1 } });
         } else {
+            console.log(nextId);
             nextId = parseInt(nextId) + 1;
-            this.state.book.id = nextId;
+            this.setState({ book: { id: nextId } });
+            console.log(nextId);
+            this.updateBookList();
         }
-        console.log(this.state.book.id);
-        this.updateBookList();
     }
 
     clear = () => {
-        this.setState({ book: initialState });
+        this.setState({
+            book: {
+                id: parseInt(this.getNextId()) + 1,
+                title: "",
+                description: "",
+                author: "",
+                image_url: "",
+                category: "",
+                deleted: false,
+            },
+        });
     };
 
     bookDataHandler = () => {
-        const id = this.state.book.id;
-        console.log(id);
-        const data = {
-            id: this.state.book.id,
-            title: this.state.book.title,
-            description: this.state.book.description,
-            author: this.state.book.author,
-            image_url: this.state.book.image_url,
-            category: this.state.book.category,
-            date: new Date(),
-            deleted: false,
-        };
+        if (!this.state.editing) {
+            const id = this.state.book.id;
 
-        localStorage.setItem(id, JSON.stringify(data));
-        localStorage.setItem("id", id);
-        this.state.book.id = id + 1;
-        this.setState({submitted: false, loading: true });
+            console.log(id);
+            const data = {
+                id: this.state.book.id,
+                title: this.state.book.title,
+                description: this.state.book.description,
+                author: this.state.book.author,
+                image_url: this.state.book.image_url,
+                category: this.state.book.category,
+                date: Date.now(),
+                deleted: false,
+            };
+
+            localStorage.setItem(id, JSON.stringify(data));
+            localStorage.setItem("id", id);
+            this.setState({ book: { id: id + 1 } });
+            this.setState({ submitted: false, loading: true });
+        } else {
+            const id = this.state.book.id;
+            const book = JSON.stringify(this.state.book);
+            localStorage.removeItem(id);
+            localStorage.setItem(id, book);
+            this.setState({ editing: false });
+        }
+
         this.clear();
         this.updateBookList();
     };
@@ -68,27 +87,22 @@ class NewBook extends Component {
     updateBookList = () => {
         const books = [];
         const id = localStorage.getItem("id");
-        if (!this.state.editing) {
-            for (let i = 1; i <= id; i++) {
-                const book = JSON.parse(localStorage.getItem(i));
-                if (book === null) continue;
-                books.push(book);
-                this.setState({ books: books });
-            }
-        } else {
-            const id = this.state.book.id;
-            const book = JSON.stringify(this.state.book);
-            localStorage.removeItem(id);
-            console.log(id, book);
-            localStorage.setItem(id, book);
-            this.setState({ editing: false });
+        for (let i = 1; i <= id; i++) {
+            const book = JSON.parse(localStorage.getItem(i));
+            if (book === null) continue;
+            books.push(book);
+            this.setState({ books: books });
         }
     };
 
+    getNextId = () => {
+        return localStorage.getItem("id");
+    };
     updateFields = (event) => {
         const book = { ...this.state.book };
         book[event.target.name] = event.target.value;
-        this.setState({ book: book, loading: false });
+        this.setState({ book: book });
+        if (event.target.name === 'image_url') this.setState({ loading: false })
     };
 
     removeBook = (book) => {
@@ -107,8 +121,8 @@ class NewBook extends Component {
                 <h2>Please fill the fields</h2>
             </div>
         ) : (
-            <img src={this.state.book.image_url} />
-        );
+                <img src={this.state.book.image_url} />
+            );
         return (
             <div className={classes.NewBook}>
                 <div className={classes.BookImage}>{img}</div>
@@ -173,7 +187,7 @@ class NewBook extends Component {
             <table className="table mt-4">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>Created on</th>
                         <th>Title</th>
                         <th>Author</th>
                         <th>Actions</th>
@@ -187,13 +201,13 @@ class NewBook extends Component {
     renderRows = () => {
         return this.state.books.map((book) => {
             return (
-                <tr key={book.id}>
-                    <td>{book.id}</td>
+                <tr key={book.id} className={classes.Mobile}>
+                    <td>{new Intl.DateTimeFormat("pt-BR").format(book.date)}</td>
                     <td>{book.title}</td>
                     <td>{book.author}</td>
                     <td>
                         <button
-                            className="btn btn-warning"
+                            className="btn btn-warning mr-2"
                             onClick={() => {
                                 this.loadBook(book);
                             }}
@@ -201,7 +215,7 @@ class NewBook extends Component {
                             <i className="fa fa-pencil"></i>
                         </button>
                         <button
-                            className="btn btn-danger ml-2"
+                            className='btn btn-danger'
                             onClick={() => this.removeBook(book)}
                         >
                             <i className="fa fa-trash"></i>
@@ -217,10 +231,17 @@ class NewBook extends Component {
         if (this.state.submitted) {
             redirect = <Redirect to="/books" />;
         }
+        let editing = null
+        if (this.state.editing) {
+            editing = <h1>Edit Book</h1>
+        } else {
+            editing = <h1>Add a Book</h1>
+        }
         return (
             <div className={classes.Container}>
-                {redirect}
-                <h1>Add a Book</h1>
+            {redirect}
+            
+                {editing}
                 {this.renderForm()}
 
                 <div className={classes.buttons}>

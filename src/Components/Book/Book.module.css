@@ -1,15 +1,15 @@
 .FlipCard {
-    margin: 10px;
+    margin: 32px 10px;
     cursor: pointer;
     background-color: transparent;
     box-sizing: border-box;
-    width: 300px;
+    width: 200px;
     height: 300px;
     perspective: 1000px;
 }
 
 .FlipCard img {
-    width: 300px;
+    width: 200px;
     height: 250px;
     margin: auto;
 }
@@ -17,8 +17,14 @@
     font-size: 14px;
     color: black;
     text-transform: uppercase;
+    background-color: powderblue;
     position: relative;
-    margin-top: 5px;
+    bottom: -10px;
+    font-weight: bold;
+    line-height: 22px;
+    display: inline;
+    padding: 8px;
+    border-radius: 8px;
 }
 
 .FlipCardInner {
@@ -30,7 +36,18 @@
     transform-style: preserve-3d;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
-
+.FlipCardInner span {
+    position: absolute;
+    top: -32px;
+    left: 0;
+    font-size: 12px;
+    text-transform: uppercase;
+    padding: 4px;
+    background-color: #c210c2;
+    border-radius: 16px;
+    color: white;
+    width: 96px;
+}
 .FlipCard:hover .FlipCardInner {
     transform: rotateY(180deg);
 }
@@ -45,7 +62,7 @@
 }
 
 .FlipCardFront {
-    background-color:transparent;
+    background-color: transparent;
     box-shadow: 4px rgba(0, 0, 0, 0.2);
     color: black;
 }
@@ -54,6 +71,12 @@
     background-color: rgb(138, 120, 189);
     color: white;
     transform: rotateY(180deg);
+}
+
+.BookInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
 /* .Book:hover,

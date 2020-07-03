@@ -42,6 +42,8 @@ class Books extends Component {
                             author={book.author}
                             image={book.image_url}
                             description={book.description}
+                            category={book.category}
+                            date={book.date}
                             clicked={() => this.bookSelectedHandler(book.id)}
                         />
                     </Link>

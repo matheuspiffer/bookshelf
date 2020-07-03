@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, Redirect } from 'react-router-dom'
+import { Route, Redirect, Switch } from 'react-router-dom'
 import classes from './Bookshelf.module.css'
 import Header from '../Components/Header/Header'
 import SideDrawer from '../Components/Header/SideDrawer/SideDrawer'
@@ -26,10 +26,12 @@ class Bookshelf extends Component {
             <div className={classes.Bookshelf}>
                 <Header drawerToggleClicked={this.sideDrawerToggleHandler} />
                 <SideDrawer open={this.state.showSideDrawer} closed={this.sideDrawerClosedHandler} />
-                <Route path="/books" component={Books} />
-                <Route path="/book/new-book" component={NewBook} />
-                <Route path="/book/:id" component={FullBook} />
-                <Redirect from="/" to="/books" />
+                <Switch>
+                    <Route path="/books" component={Books} />
+                    <Route path="/book/new-book" component={NewBook} />
+                    <Route path="/book/:id" component={FullBook} />
+                    <Redirect from="/" to="/books" />
+                </Switch>
 
             </div>
         )
