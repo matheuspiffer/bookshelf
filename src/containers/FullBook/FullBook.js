@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from "react";
 import classes from "./FullBook.module.css";
+import Comment from './comment/comment'
 class FullBook extends Component {
     state = {
         selectedBook: [],
@@ -11,22 +12,39 @@ class FullBook extends Component {
         const id = this.props.match.params.id
         const data = JSON.parse(localStorage.getItem(id))
         this.setState({ selectedBook: data })
+    
+
 
     };
 
+
+
     saveComment = () => {
-        const newComment = this.state.comment
+        const comment = this.state.comment
+        const newComment = {
+            comment: String(comment),
+            date: Date.now()
+        }
         const bookComments = this.state.selectedBook.comments
         const comments = [
             ...bookComments,
             newComment
         ]
-        this.setState({ selectedBook: { comments: comments } })
 
-        console.log(this.state.selectedBook.comments)
+        const newBook = {
+            ...this.state.selectedBook,
+            comments: comments
+        }
+        this.setState({
+            selectedBook: newBook
+        })
+
+        const id = newBook.id
+        const data = JSON.stringify(newBook)
+        localStorage.setItem(id, data)
     }
 
-    updateComment = (event) => {
+    getComment = (event) => {
         const comment = [event.target.value];
         this.setState({ comment: comment })
     }
@@ -62,30 +80,41 @@ class FullBook extends Component {
         )
     }
 
+
+
     renderSingleComment = () => {
-        const comments = this.state.selectedBook.comments
-        if (comments) {
-            return (
-                comments.forEach(comment => {
-                    return (
-                        <div className={classes.SingleComment}>
-                            <p>{comment}</p>
-                        </div>
-                    )
-                })
-            )
-        }
+        let data = this.state.selectedBook.comments || []
+        // let dataTransformed = Object.keys(data).map(igKey => {
+        //     return [...Array(this.state.selectedBook.comments[igKey])]
+        //         .map((c, i) => {
+        //             return (
+        //                 <Comment comment={c.comment} date={c.date} />
+        //             )
+        //         })
+        // })
+        // data.map(comment => {
+        //     return (
+        //         console.log(comment.comment)
+                // <div >
+                //     <p>{comment.comment}</p>
+                //     <p>{comment.date}</p>
+                // </div >
+        //     )
+        // })
     }
+
+
     renderComments = () => {
+
         return (
 
-            <div className={classes.CommentsContainer}>
+            <div className={classes.CommentsContainer} >
                 <h3>Have you read this book? </h3>
                 <p>Leave a comment</p>
                 <button className="btn btn-secondary btn-lg" onClick={this.saveComment}>Say it!</button>
-                <textarea rows="4" cols="50" style={{ resize: 'none' }} value={this.state.comment} onChange={(event) => { this.updateComment(event) }}></textarea>
+                <textarea rows="4" cols="50" style={{ resize: 'none' }} value={this.state.comment} onChange={(event) => { this.getComment(event) }}></textarea>
                 <div className={classes.CommentArea}>
-
+                    {this.renderSingleComment()}
                 </div>
             </div>
         )

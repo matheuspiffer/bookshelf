@@ -7,13 +7,15 @@ class Books extends Component {
         books: [],
         filteredBooks: [],
         selectedBookId: "",
-        error: false,
+        showFilters: false,
+        filter: false,
         filters: {
-            reading: true,
-            wantToRead: true,
-            read: true,
+            reading: false,
+            wantToRead: false,
+            read: false,
         },
-        order: false,
+        alphabetic: true,
+        date: true,
     };
 
     componentDidMount() {
@@ -34,94 +36,109 @@ class Books extends Component {
     }
 
     filters(event) {
-        // if (event.target.name === 'order') this.setState({ order: !this.state.order })
+        if (event.target.name === 'all') return this.setState({ filter: false })
+        this.setState({ filter: true })
         const filters = { ...this.state.filters };
         filters[event.target.name] = !this.state.filters[event.target.name];
-        this.setState({ filters: filters });
         const filteredBooks = this.state.books.filter(
-            (book) => book.category == event.target.name
+            (book) => book.category === event.target.name
         );
-        // console.log(filteredBooks);
+        this.setState({ filteredBooks: filteredBooks });
+        console.log(filteredBooks);
     }
 
     order(a, b) {
-        if (a.title < b.title) return -1
+        if (a.title < b.title) return -1;
         if (a.title > b.title) return 1;
-        return 0
+        return 0;
     }
 
-    buttonsRender() {
+    filtersRender() {
+        if (!this.state.showFilters) {
+            return (
+                <div>
+                    <h4 style={{ cursor: 'pointer' }} onClick={() => { this.setState({ showFilters: true }); }}>Show Filters</h4>
+                </div>
+            );
+        }
         return (
             <div>
-                <button
-                    name="read"
-                    className={
-                        this.state.filters.read
-                            ? "btn btn-secondary"
-                            : "btn btn-outline-secondary"
-                    }
-                    onClick={(event) => this.filters(event)}
-                >
-                    Read
+                <h4 style={{ cursor: 'pointer', textAlign: 'center', marginBottom: '16px' }} onClick={() => { this.setState({ showFilters: false }); }}>Hide Filters</h4>
+                <div className={classes.FiltersControl}>
+
+
+                    <button
+                        name="all"
+                        className={classes.Button}
+                        onClick={(event) => this.filters(event)}>
+                        All
                 </button>
-                <button
-                    name="wantToRead"
-                    className={
-                        this.state.filters.wantToRead
-                            ? "btn btn-secondary"
-                            : "btn btn-outline-secondary"
-                    }
-                    onClick={(event) => this.filters(event)}
-                >
-                    Want to Read
+                    <button
+                        name="read"
+                        className={classes.Button}
+                        onClick={(event) => this.filters(event)}>
+                        Read
                 </button>
-                <button
-                    name="reading"
-                    className={
-                        this.state.filters.reading
-                            ? "btn btn-secondary"
-                            : "btn btn-outline-secondary"
-                    }
-                    onClick={(event) => this.filters(event)}
-                >
-                    Reading
-                </button>
-                <button
-                    name="order"
-                    className={
-                        this.state.order
-                            ? "btn btn-success"
-                            : "btn btn-outline-success"
-                    }
-                    onClick={(event) => this.filters(event)}
-                >
-                    By order
-                </button>
+                    <button
+                        name="wantToRead"
+                        className={classes.Button}
+                        onClick={(event) => this.filters(event)}>
+                        Want to Read
+                    </button>
+                    <button
+                        name="reading"
+                        className={classes.Button}
+                        onClick={(event) => this.filters(event)}>
+                        Reading
+                        </button>
+                    <button
+                        name="alphabetic"
+                        className={classes.Button}
+                        onClick={(event) => this.filters(event)}>
+                        Alphabetical Order
+                            </button>
+                    <button
+                        name="date"
+                        className={classes.Button}
+                        onClick={(event) => this.filters(event)}>
+                        Date Order
+                    </button>
+                </div>
             </div>
         );
     }
 
-    render() {
 
-        let books = this.state.books.sort(this.order).map((book) => {
-            return (
-                <Link to={"book/" + book.id} key={book.id}>
-                    <Book
-                        title={book.title}
-                        author={book.author}
-                        image={book.image_url}
-                        description={book.description}
-                        category={book.category}
-                        date={book.date}
-                    />
-                </Link>
-            );
-        });
+    render() {
+        // let books = null
+        // if (this.state.filter) {
+        //     books = this.state.filteredBooks
+        // } else {
+        //     books = this.state.books
+        // }
+        // console.log(books)
+        let books = this.state.filter ? this.state.filteredBooks : this.state.books
+
+        console.log(this.state.books)
+        console.log(this.state.filteredBooks)
 
         return (
             <section className={classes.Container}>
-                <div className={classes.Filters}>{this.buttonsRender()}</div>
-                <div className={classes.Books}>{books}</div>
+                <div className={classes.Filters}>{this.filtersRender()}</div>
+                <div className={classes.Books}>{books.map(book => {
+                    return (
+                        <Link to={"book/" + book.id} key={book.id} className={classes.OutterCard}>
+                            <Book
+                                title={book.title}
+                                author={book.author}
+                                image={book.image_url}
+                                description={book.description}
+                                category={book.category}
+                                date={book.date}
+                            />
+                        </Link>
+                    );
+                })}</div>
             </section>
         );
     }

@@ -1,40 +1,43 @@
 .Card {
-    margin: 32px 10px;
+    margin: 0;
     cursor: pointer;
     background-color: transparent;
-    box-sizing: border-box;
-    width: 180px;
-    height: 250px;
+
+    width: 220px;
+    height: 300px;
     perspective: 1000px;
-    border-radius: 0 0 40px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-.img {
-    z-index: 100;
-}
+
 .Card img {
     width: 180px;
     height: 220px;
-    margin: auto;
+    margin: 12px 0;
+}
+.Transition {
+    position: relative;
+
+    width: 100%;
+    text-align: center;
 }
 .Transition h3 {
-    font-size: 10px;
+    font-size: 12px;
     color: black;
     text-transform: uppercase;
-    position: absolute;
-    bottom: -28px;
-
     line-height: 22px;
-    display: inline;
-    padding: 8px;
+    padding: 0;
+    margin: 0;
     border-radius: 8px;
-    text-align: center;
     font-weight: bold;
-
+    overflow: hidden;
 }
 
 .Card span {
     position: absolute;
-    top: -32px;
+    top: -4px;
     left: 0;
     font-size: 12px;
     text-transform: uppercase;
@@ -55,4 +58,16 @@
 
 .Card:hover {
     transform: scale(1.1);
+}
+
+@media (max-width: 500px) {
+    .Card {
+        width: 250px;
+        height: 300px;
+    }
+    .Card img {
+        width: 180px;
+        height: 220px;
+        margin: 12px 0;
+    }
 }
