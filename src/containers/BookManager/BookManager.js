@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from "react";
-import classes from "./NewBook.module.css";
+import classes from "./BookManager.module.css";
 import Spinner from "../../Components/Spinner/Spinner";
 import { Redirect } from "react-router-dom";
 

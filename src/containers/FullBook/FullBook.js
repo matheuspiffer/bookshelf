@@ -14,7 +14,7 @@ class FullBook extends Component {
         const data = JSON.parse(localStorage.getItem(id))
         this.setState({ selectedBook: data })
     };
-
+    //get old comments and new comment and save them into an array
     saveComment = () => {
         const comment = this.state.comment.comment
         let name = this.state.comment.name
@@ -47,7 +47,7 @@ class FullBook extends Component {
         localStorage.setItem(id, data)
 
     }
-
+    //set comment to state
     getComment = (event) => {
         const comment = { ...this.state.comment }
         comment[event.target.name] = event.target.value;
@@ -74,7 +74,7 @@ class FullBook extends Component {
                     </div>
                     <div className={classes.BookInfo}>
                         <h4>Category</h4>
-                        <p>{this.state.selectedBook.category}</p>
+                        <p>{this.state.selectedBook.category === 'wantToRead' ? 'want to read' : this.state.selectedBook.category}</p>
                     </div>
                     <div className={classes.BookInfo}>
                         <h4>Created On</h4>
@@ -94,7 +94,7 @@ class FullBook extends Component {
                 <div className={classes.SingleComment}>
                     <div className={classes.DateAndName}>
                         <span>
-                          From  {comment.name}
+                            By  {comment.name}
                         </span>
                         <span>On {Intl.DateTimeFormat('pt-BR', {
                             year: 'numeric', month: 'numeric', day: 'numeric',

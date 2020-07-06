@@ -22,7 +22,7 @@ class Books extends Component {
         const books = [];
 
         const id = localStorage.getItem("id");
-
+        //get data from localstorage and set a default imagem if it's an empty field
         for (let i = 1; i <= id; i++) {
             const book = JSON.parse(localStorage.getItem(i));
             if (book === null) continue;
@@ -34,7 +34,7 @@ class Books extends Component {
 
         this.setState({ books: books });
     }
-
+    // filters for the categories
     filters(event) {
         if (event.target.name === 'all') return this.setState({ filter: false })
         this.setState({ filter: true })
@@ -111,7 +111,8 @@ class Books extends Component {
             </div>
         );
     }
-
+    // check first if books(data from local storage) or filtered books(categories) must be shown, 
+    //then check if alphabetical order or date order has a true state
     bookRender() {
         let filteredBooks = null
         let books = this.state.filter ? this.state.filteredBooks : this.state.books
