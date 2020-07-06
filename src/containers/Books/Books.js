@@ -46,7 +46,7 @@ class Books extends Component {
         this.setState({ filteredBooks: filteredBooks });
         console.log(filteredBooks);
     }
-
+    //newest
     dateOrder(a, b) {
         if (a.date < b.date) return 1;
         if (a.date > b.date) return -1;
