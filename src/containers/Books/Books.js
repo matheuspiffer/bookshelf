@@ -14,8 +14,8 @@ class Books extends Component {
             wantToRead: false,
             read: false,
         },
-        alphabetic: true,
-        date: true,
+        alphabeticOrder: false,
+        dateOrder: false,
     };
 
     componentDidMount() {
@@ -47,7 +47,13 @@ class Books extends Component {
         console.log(filteredBooks);
     }
 
-    order(a, b) {
+    dateOrder(a, b) {
+        if (a.date < b.date) return 1;
+        if (a.date > b.date) return -1;
+        return 0;
+    }
+
+    alphabeticOrder(a, b) {
         if (a.title < b.title) return -1;
         if (a.title > b.title) return 1;
         return 0;
@@ -65,8 +71,6 @@ class Books extends Component {
             <div>
                 <h4 style={{ cursor: 'pointer', textAlign: 'center', marginBottom: '16px' }} onClick={() => { this.setState({ showFilters: false }); }}>Hide Filters</h4>
                 <div className={classes.FiltersControl}>
-
-
                     <button
                         name="all"
                         className={classes.Button}
@@ -94,13 +98,13 @@ class Books extends Component {
                     <button
                         name="alphabetic"
                         className={classes.Button}
-                        onClick={(event) => this.filters(event)}>
+                        onClick={() => this.setState({ alphabeticOrder: true, dateOrder: false })}>
                         Alphabetical Order
                             </button>
                     <button
                         name="date"
                         className={classes.Button}
-                        onClick={(event) => this.filters(event)}>
+                        onClick={() => this.setState({ alphabeticOrder: false, dateOrder: true })}>
                         Date Order
                     </button>
                 </div>
@@ -108,37 +112,63 @@ class Books extends Component {
         );
     }
 
+    bookRender() {
+        let filteredBooks = null
+        let books = this.state.filter ? this.state.filteredBooks : this.state.books
+        if (this.state.alphabeticOrder) {
+            filteredBooks = books.sort(this.alphabeticOrder).map(book => {
+                return (
+                    <Link to={"book/" + book.id} key={book.id} className={classes.OutterCard}>
+                        <Book
+                            title={book.title}
+                            author={book.author}
+                            image={book.image_url}
+                            description={book.description}
+                            category={book.category}
+                            date={book.date}
+                        />
+                    </Link>
+                );
+            })
+        }
+        if (this.state.dateOrder) {
+            filteredBooks = books.sort(this.dateOrder).map(book => {
+                return (
+                    <Link to={"book/" + book.id} key={book.id} className={classes.OutterCard}>
+                        <Book
+                            title={book.title}
+                            author={book.author}
+                            image={book.image_url}
+                            description={book.description}
+                            category={book.category}
+                            date={book.date}
+                        />
+                    </Link>
+                );
+            })
+        }
+        filteredBooks = books.map(book => {
+            return (
+                <Link to={"book/" + book.id} key={book.id} className={classes.OutterCard}>
+                    <Book
+                        title={book.title}
+                        author={book.author}
+                        image={book.image_url}
+                        description={book.description}
+                        category={book.category}
+                        date={book.date}
+                    />
+                </Link>
+            );
+        })
+        return filteredBooks
+    }
 
     render() {
-        // let books = null
-        // if (this.state.filter) {
-        //     books = this.state.filteredBooks
-        // } else {
-        //     books = this.state.books
-        // }
-        // console.log(books)
-        let books = this.state.filter ? this.state.filteredBooks : this.state.books
-
-        console.log(this.state.books)
-        console.log(this.state.filteredBooks)
-
         return (
             <section className={classes.Container}>
                 <div className={classes.Filters}>{this.filtersRender()}</div>
-                <div className={classes.Books}>{books.map(book => {
-                    return (
-                        <Link to={"book/" + book.id} key={book.id} className={classes.OutterCard}>
-                            <Book
-                                title={book.title}
-                                author={book.author}
-                                image={book.image_url}
-                                description={book.description}
-                                category={book.category}
-                                date={book.date}
-                            />
-                        </Link>
-                    );
-                })}</div>
+                <div className={classes.Books}>{this.bookRender()}</div>
             </section>
         );
     }

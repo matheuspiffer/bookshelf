@@ -2,7 +2,7 @@
     width: 90%;
     margin: 72px auto;
     height: auto;
-    padding: 0 40px;
+    padding: 0 4px;
     border: 1px solid #eee;
     box-shadow: 0 2px 3px #ccc;
     text-align: center;
@@ -70,14 +70,13 @@
     border: 2px solid #c210c2;
     border-radius: 5px;
     color: #fff;
-    /* display: block; */
+
     font-size: 16px;
     padding: 10px;
     position: relative;
     margin: 20px 20px;
     width: 200px;
-    /* left: 50%;
-    transform: translateX(-50%); */
+
 }
 .Container button:focus {
     outline: none;
