@@ -96,7 +96,7 @@ class FullBook extends Component {
                         <span>
                             By  {comment.name}
                         </span>
-                        <span>On {Intl.DateTimeFormat('pt-BR', {
+                        <span>on {Intl.DateTimeFormat('pt-BR', {
                             year: 'numeric', month: 'numeric', day: 'numeric',
                             hour: 'numeric', minute: 'numeric',
                             hour12: false,

@@ -25,16 +25,14 @@ class NewBook extends Component {
 
     componentDidMount() {
         let nextId = localStorage.getItem("id");
-        console.log(nextId);
+
         this.setState({ loading: !this.state.loading });
         if (!nextId) {
             localStorage.setItem("id", 0);
             this.setState({ book: { id: 1 } });
         } else {
-            console.log(nextId);
             nextId = parseInt(nextId) + 1;
             this.setState({ book: { id: nextId } });
-            console.log(nextId);
             this.updateBookList();
         }
     }
