@@ -1,7 +1,7 @@
 <h1 align="center">BOOKSHELF</h1>
 
 ## 📄 ABOUT
-<p>A model manager for bookshelf, create, edit, delete, and show all books.</p>
+<p>A model manager for bookshelf, create, edit, delete, and list all books.</p>
 
 ## 🔗TECHNOLOGIES
 
@@ -15,7 +15,7 @@
 <img src="https://ik.imagekit.io/lc7oxtp9qa/add_kATJIXUCx.gif">
 </h1>
 
-<h1 align="center">EDITIND AND DELETING A BOOK</h1>
+<h1 align="center">EDITING AND DELETING A BOOK</h1>
 
 <h1 align="center">
 <img src="https://ik.imagekit.io/lc7oxtp9qa/editing-deleting_R0Q40aGNO.gif">
