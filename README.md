@@ -21,7 +21,7 @@
 <img src="https://ik.imagekit.io/lc7oxtp9qa/editing-deleting_R0Q40aGNO.gif">
 </h1>
 
-<h1 align="center">SHOWING BOOKS</h1>
+<h1 align="center">DISPLAYING BOOKS</h1>
 
 <h1 align="center">
 <img src="https://ik.imagekit.io/lc7oxtp9qa/showing_GMzIQayNPq.gif">
